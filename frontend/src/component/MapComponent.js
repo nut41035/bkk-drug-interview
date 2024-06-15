@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import { GoogleMap, Marker, StandaloneSearchBox } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  StandaloneSearchBox,
+  MarkerF,
+} from "@react-google-maps/api";
 
 const containerStyle = {
   width: "100%",
   height: "400px",
 };
 
-const MapComponent = ({ handleState }) => {
+const MapComponent = ({ handleState, lat, lng }) => {
   const [map, setMap] = useState(null);
   const [center, setCenter] = useState({ lat: 13, lng: 100 });
   const searchBoxRef = useRef(null);
@@ -42,7 +46,6 @@ const MapComponent = ({ handleState }) => {
         lng: place.geometry.location.lng(),
       };
       setCenter(position);
-      handleState({ lat: place.geometry.location.lat() });
       handleState({ address: `${place.formatted_address}` });
     }
   };
@@ -99,6 +102,13 @@ const MapComponent = ({ handleState }) => {
           streetViewControl: false, // Disable street view control
         }}
       >
+        <MarkerF
+          key="marker_1"
+          position={{
+            lat: lat,
+            lng: lng,
+          }}
+        />
         <div
           style={{
             position: "absolute",
@@ -132,7 +142,6 @@ const MapComponent = ({ handleState }) => {
             />
           </StandaloneSearchBox>
         </div>
-        <Marker lat={center.lat} lng={center.lng} />
       </GoogleMap>
     </div>
   );

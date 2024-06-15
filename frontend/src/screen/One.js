@@ -27,10 +27,11 @@ function One() {
     navigate("/cart", { state: state });
   };
 
+
   return (
     <div>
       <Topbar title="เลือกที่อยู่ส่งด่วน" isBackable={false} />
-      <MapComponent handleState={handleState} />
+      <MapComponent handleState={handleState} lat={state.lat} lng={state.lng}/>
 
       <PinSummary
         title={"ที่อยู่* (ตำบล, อำเภอ, จังหวัด, รหัสไปรษณีย์)"}
