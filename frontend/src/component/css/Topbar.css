@@ -1,0 +1,31 @@
+.column {
+  float: left;
+}
+
+.side {
+  width: 10%;
+}
+
+.center {
+  width: 80%;
+  text-align: center;
+}
+
+.row {
+  content: "";
+  display: table;
+  clear: both;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  color: #00b3f0;
+  font-weight: bold;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.arrow {
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+}
