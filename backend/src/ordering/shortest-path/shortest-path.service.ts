@@ -56,15 +56,15 @@ export class ShortestPathService {
 
         const pq = new PriorityQueue({ comparator: (a, b) => a.distance - b.distance });
 
-        pq.queue({ distance: 0, store: {site_id: "pin"}, products: request.order, path: [] });
+        pq.queue({ distance: 0, store: {site_id: "pin"}, products: request.order, path: [], pathId: [] });
 
         while (pq.length > 0) {
-            const { distance, store, products, path } = pq.dequeue();
+            const { distance, store, products, path, pathId } = pq.dequeue();
             if (products.length === 0) {
                 return { path, distance };
             }
             for (const neighbor of stores) {
-                if (!path.includes(neighbor.site_id)) {
+                if (!pathId.includes(neighbor.site_id)) {
                     const {newProductNeeded, fillSomething} = fillCart(products, neighbor)
                     this.logger.log(`newProductNeeded: ${newProductNeeded.length}  and filled sth: ${fillSomething}`);
                     if (fillSomething){
@@ -74,7 +74,8 @@ export class ShortestPathService {
                             distance: newDistance,
                             store: neighbor,
                             products: newProductNeeded,
-                            path: [...path, neighbor.site_desc]
+                            path: [...path, neighbor.site_desc],
+                            pathId: [...pathId, neighbor.site_id]
                         });
                     }
                 }
