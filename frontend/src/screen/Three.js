@@ -1,5 +1,7 @@
 import React from "react";
 
+import "../component/css/Modal.css";
+
 import Topbar from "../component/Topbar";
 import ProductSummary from "../component/ProductSummary";
 import LocationStep from "../component/LocationStep";
@@ -61,7 +63,6 @@ function Three() {
     },
   };
 
-  console.log(error);
   if (loading) {
     return (
       <div
@@ -82,9 +83,13 @@ function Three() {
         {error && (
           <Modal
             isOpen={!!error}
-            onRequestClose={handleRetry}
             contentLabel="Error Modal"
-            style={customStyles}
+            className={"modal-content"}
+            style={{
+              overlay: {
+                backgroundColor: "rgba(0, 0, 0, 0.75)",
+              },
+            }}
           >
             <h2>{error.message}</h2>
             <div>{error.code}</div>
@@ -109,27 +114,5 @@ function Three() {
     );
   }
 }
-
-const customStyles = {
-  content: {
-    width: "300px",
-    height: "200px",
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    padding: "20px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
-  },
-  overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.75)",
-  },
-};
 
 export default Three;
