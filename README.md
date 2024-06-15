@@ -34,22 +34,23 @@ This function ensures that objects are dequeued based on their **distance in asc
 
 Algorithm:
 
-1. Take the first element in the queue (always the shortest accumulated distance)
-2. Check if this already fulfill the order
+1. Query distance from current location to all store (concurrently) and put each in queue
+2. Take the first element in the queue (always the shortest accumulated distance)
+3. Check if this already fulfill the order
    1. if yes -> return path
    2. if no -> continue to next step
-3. Calculate all stores that is not already in the path
+4. Calculate all stores that is not already in the path
    1. fills as many products as possible
    2. add distance to accumulated distance
    3. append store description to the path
-4. Back to step 1
+5. Back to step 2
 
 # Distance seeding
 If we always fire API to google for distances between 2 locations for every store location every time user query
 
 There will be WAY TOO MANY api call to google which will cost a lot of money
 
-So, instead, we only do it one time at seeding bore starting the projct.
+So, instead, we only do it one time at seeding before starting the projct.
 
 List of all distance could be calculated via BE API
 >POST http://localhost:4000/google-map/seed
