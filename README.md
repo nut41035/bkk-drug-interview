@@ -51,7 +51,7 @@ List of all distance could be calculated via BE API
 >POST http://localhost:4000/google-map/seed
 
 With JSON body
-```aidl
+```json
 {
     "locations": [
          //...list of all location obj...
@@ -59,7 +59,7 @@ With JSON body
 }
 ```
 location obj example
-```aidl
+```json
 {
   //...whatever properties...
   "site_id": "1",
@@ -74,7 +74,7 @@ location obj example
 }
 ```
 Then save it to distances collection. The data look like this
-```aidl
+```json
 [
     {
         "key": "1-10", // key format with {from.site_id}-{to.site_id}
