@@ -1,6 +1,6 @@
 # How to start application
 
-Replace `<GOOGLE_MAPS_API_KEY>` and `<USERNAME-PASSWORD`> from email in 
+Replace `<GOOGLE_MAPS_API_KEY>` and `<USERNAME-PASSWORD>` from email in 
 1. backend/.env
 2. frontend/.env.development
 
