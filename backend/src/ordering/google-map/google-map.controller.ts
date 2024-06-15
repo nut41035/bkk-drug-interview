@@ -19,4 +19,9 @@ export class GoogleMapController {
     async getSeed(@Body() request: Locations[]){
         return this.googleMapService.getAllDistance(request);
     }
+
+    @Post('/fromPin')
+    async getDistancesFromPin(@Body() request){
+        return this.googleMapService.getAllDistancePin(request);
+    }
 }

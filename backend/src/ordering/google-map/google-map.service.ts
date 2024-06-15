@@ -56,21 +56,23 @@ export class GoogleMapService {
 
     async getAllDistancePin(request) {
         const distances = [];
-        for (const to of request.to) {
+
+        const requestList = request.to.map(to => {
             const jsonStringTo = JSON.stringify(to.location);
             const pinObjectTo: Pin = JSON.parse(jsonStringTo) as Pin;
 
-            const distance = await this.getDistance({
+            // Return a promise from `getDistance`
+            return this.getDistance({
                 flon: request.lon,
                 flat: request.lat,
                 tlon: pinObjectTo.coordinates[0],
                 tlat: pinObjectTo.coordinates[1]
-            });
-            distances.push({
+            }).then(response => ({
                 key: `pin-${to.site_id}`,
-                distance: distance
-            });
-        }
-        return distances;
+                distance: response
+            }));
+        });
+
+        return await Promise.all(requestList);
     }
 }
