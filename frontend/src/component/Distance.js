@@ -1,6 +1,7 @@
 import "./css/Card.css";
 
 import Card from "@mui/joy/Card";
+import Divider from "@mui/material/Divider";
 
 function Distance({ distance }) {
   return (
@@ -25,7 +26,9 @@ function Distance({ distance }) {
           {(distance / 1000).toFixed(1)} กม.
         </span>
       </div>
+      <Divider variant="middle" />
     </Card>
+    
   </div>
   );
 }
