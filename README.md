@@ -21,3 +21,69 @@ The application calculate the shortest path for a user to acquire a requested se
 |Database      | MongoDB                       |<img height="50" src="https://user-images.githubusercontent.com/25181517/182884177-d48a8579-2cd0-447a-b9a6-ffc7cb02560e.png">|
 |Deployment    | Docker & <br/> Docker Compose |<img height="50" src="https://user-images.githubusercontent.com/25181517/117207330-263ba280-adf4-11eb-9b97-0ac5b40bc3be.png">|
 
+#Shortest path calculation
+Implemented a pathfinding algorithm using a **priority queue** to find the shortest path based on distance, while also managing a list of products that need to be fulfilled at various stores.
+
+**priority queue**  is initialized using a custom comparator function. 
+
+This function ensures that objects are dequeued based on their **distance in ascending order**.
+
+Algorithm:
+
+1. Take the first element in the queue (always the shortest accumulated distance)
+2. Check if this already fulfill the order
+   1. if yes -> return path
+   2. if no -> continue to next step
+3. Calculate all stores that is not already in the path
+   1. fills as many products as possible
+   2. add distance to accumulated distance
+   3. append store description to the path
+4. Back to step 1
+
+#Distance seeding
+If we always fire API to google for distances between 2 locations for every store location every time user query
+
+There will be WAY TOO MANY api call to google which will cost a lot of money
+
+So, instead, we only do it one time at seeding bore starting the projct.
+
+List of all distance could be calculated via BE API
+>POST http://localhost:4000/google-map/seed
+
+With JSON body
+```aidl
+{
+    "locations": [
+         //...list of all location obj...
+    ]
+}
+```
+location obj example
+```aidl
+{
+  //...whatever properties...
+  "site_id": "1",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      100.594908, //longtitude
+      13.714791   //latitude
+    ]
+  }
+  //...whatever properties...
+}
+```
+Then save it to distances collection. The data look like this
+```aidl
+[
+    {
+        "key": "1-10", // key format with {from.site_id}-{to.site_id}
+        "distance": 12646 // distances in meters
+    },
+    {
+        "key": "1-10",
+        "distance": 12646
+    },
+    //...th rest of distances obj...
+]
+```
